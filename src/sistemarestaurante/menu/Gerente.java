@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.*;
+import java.sql.Date;
 
 import sistemarestaurante.administrativo.CustoEstoque;
 import sistemarestaurante.administrativo.CustoRH;
@@ -39,6 +41,7 @@ public class Gerente {
             System.out.println("[14] Consultar despesas funcionarios.");
             System.out.println("[15] Consultar balanco.");
             System.out.println("[16] Listar preferencias de clientes.");
+            System.out.println("[17] Cadastrar novo fornecedor.");
             System.out.println("[0] Sair.");
             System.out.println();
             
@@ -109,6 +112,9 @@ public class Gerente {
                 case 16:
                     listarPreferencias();
                     break;
+                case 17:
+                    cadastrarFornecedor();
+                    break;
 
                 case 0:
                     return;
@@ -142,8 +148,88 @@ public class Gerente {
     }
 
     //#########################################################################
-    public static void contrataFuncionario() {
-        System.out.println("Opcao nao implementada!");
+    public static void contrataFuncionario() throws Exception throws SQLException{
+        Funcionario este=new Funcionario();
+        Scanner input = new Scanner(System.in);
+        String novo;
+        int outro;
+        double num;
+        Date data;
+        System.out.println("Digite o cpf do novo funcionario");
+        novo=input.nextLine();
+        este.setCpf(novo); 
+        System.out.println("Digite o nome do novo funcionario");
+        novo=input.nextLine();
+        este.setNome(novo);
+        System.out.println("Digite o rg do novo funcionario");
+        novo=input.nextLine();
+        este.setRg(novo);
+        System.out.println("Digite a dada de nacimentodo novo funcionario no formato dia/mes/ano como o exemplo:20/02/1996");
+        novo=input.nextLine();
+         try {
+            DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            data = (java.util.Date)formatter.parse(novo);
+        } catch (ParseException e) {            
+            throw e;
+        }
+        este.setDataNascimento(data);
+        System.out.println("Digite o nome do pai do novo funcionario");
+        novo=input.nextLine();
+        este.setFiliacaoPai(novo);
+        System.out.println("Digite o nome da mãe do novo funcionario");
+        novo=input.nextLine();
+        este.setFiliacaoMae(novo);
+        System.out.println("Digite o pais do novo funcionario");
+        novo=input.nextLine();
+        este.setNaturalidade(novo);
+        System.out.println("Digite o estado civl do novo funcionario");
+        novo=input.nextLine();
+        este.setEstadoCivil(novo);
+        System.out.println("Digite o 1 caso o novo funcionario seja homem e 2 caso seja mulher");
+        outro=input.nextInt();
+        if(outro==1)
+        {
+            este.setSexoMasculino(true)
+        }
+        if(outro==2)
+        {
+            este.setSexoMasculino(false)
+        }
+        System.out.println("Digite o telefone do novo funcionario");
+        novo=input.nextLine();
+        este.setTelefone(novo)
+        System.out.println("Digite o email do novo funcionario");
+        novo=input.nextLine();
+        este.setEmail(novo);
+        System.out.println("Digite o endereco do novo funcionario");
+        novo=input.nextLine();
+        este.setEndereco(novo);
+        System.out.println("Digite o grau de escolaridade do novo funcionario");
+        novo=input.nextLine();
+        este.setEscolaridade(novo);
+        System.out.println("Digite a carteirade trabalho do novo funcionario");
+        novo=input.nextLine();
+        este.setCtps(novo);
+        System.out.println("Digite o salario do novo funcionario");
+        num = input.nextDouble();
+        este.setSalario(num);
+        System.out.println("Digite 1 caso o turno do novo funcionario seja diurno e 2 caso seja noturno");
+        outro=input.nextInt();
+        if(outro==1)
+        {
+            este.setTurnoDiurno(true);
+        }
+        if(outro==1)
+        {
+            este.setTurnoDiurno(false);
+        }
+        System.out.println("Digite a senha inicial do novo funcionario");
+        novo=input.nextLine();
+        este.setSenha(novo) ;
+        System.out.println("Digite o cargo do novo funcionario");
+        outro=input.nextInt();
+        este.setCodigoCargo(outro);
+        este.insereBanco();
     }
 
     
@@ -326,5 +412,26 @@ public class Gerente {
             stmt.close();
             con.close();
         }
+    }
+     public static void cadastrarFornecedor() throws SQLException {
+        Fornecedor este=new Fornecedor();
+         Scanner input = new Scanner(System.in);
+         String novo;
+        System.out.println("Digite o cnpj do novo fornecedor");
+         novo=input.nextLine();
+        este.setCnpj(novo) ;
+        System.out.println("Digite a Razao Social do novo fornecedor");
+         novo=input.nextLine();
+        este.setRazaoSocial(novo);
+        System.out.println("Digite o telefone do novo fornecedor");
+         novo=input.nextLine();
+          este.setTelefone(novo);
+        System.out.println("Digite o endereco do novo fornecedor");
+         novo=input.nextLine();
+        este.setEndereco(novo);
+        System.out.println("Digite o email do novo fornecedor");
+         novo=input.nextLine();
+         este.setEmail(novo);
+         este.insereBanco();
     }
 }
